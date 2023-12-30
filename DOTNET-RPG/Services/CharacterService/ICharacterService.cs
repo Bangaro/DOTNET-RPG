@@ -1,11 +1,15 @@
+using DOTNET_RPG.DTOs.Character;
 using DOTNET_RPG.Models;
 
 namespace DOTNET_RPG.Services.CharacterService;
 
 public interface ICharacterService
 {
-    Task<List<Character>> GetAllCharacters();
-    Task<Character> GetCharacterById(int id);
-    Task<List<Character>> AddCharacter(Character newCharacter);
+    Task<ServiceResponse<List<GetCharacterResponseDTO>>> GetAllCharacters();
+    Task<ServiceResponse<GetCharacterResponseDTO>> GetCharacterById(int id);
+    Task<ServiceResponse<GetCharacterResponseDTO>> AddCharacter(AddCharacterDTO newCharacter);
+    Task<ServiceResponse<GetCharacterResponseDTO>> UpdateCharacter(UpdateCharacterDTO newCharacter);
+    
+    Task<ServiceResponse<List<GetCharacterResponseDTO>>> DeleteCharacter(int id);
 
 }
