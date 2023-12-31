@@ -17,10 +17,11 @@ public class CharacterService : ICharacterService
         _context = context;
     }
 
-    public async Task<ServiceResponse<List<GetCharacterResponseDTO>>> GetAllCharacters()
+    public async Task<ServiceResponse<List<GetCharacterResponseDTO>>> GetAllCharacters(int userId)
     {
         var serviceResponse = new ServiceResponse<List<GetCharacterResponseDTO>>();
-        var dbCharacters = await _context.Characters.ToListAsync();
+        var dbCharacters = await _context.Characters.Where(c => c.User!.Id == userId).ToListAsync();
+
         serviceResponse.Data = dbCharacters.Select(c => _mapper.Map<GetCharacterResponseDTO>(c)).ToList();
 
         return serviceResponse;
