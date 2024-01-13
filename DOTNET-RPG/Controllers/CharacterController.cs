@@ -23,8 +23,7 @@ public class CharacterController : ControllerBase
     [HttpGet("GetAll")]
     public async Task<ActionResult<ServiceResponse<List<GetCharacterResponseDTO>>>> GetAll()
     {
-        var id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value);
-        return Ok(await _characterService.GetAllCharacters(id));
+        return Ok(await _characterService.GetAllCharacters());
     }
 
     [HttpGet("GetSingle/{id}")]
@@ -37,7 +36,7 @@ public class CharacterController : ControllerBase
     public async Task<ActionResult<ServiceResponse<GetCharacterResponseDTO>>> AddCharacter(
         AddCharacterDTO character)
     {
-        return Ok(await _characterService.AddCharacter(character));
+        return StatusCode(201, await _characterService.AddCharacter(character));
     }
 
     [HttpPut]
@@ -57,5 +56,12 @@ public class CharacterController : ControllerBase
 
 
         return Ok(response);
+    }
+
+    [HttpPost("Skill")]
+    public async Task<ActionResult<ServiceResponse<GetCharacterResponseDTO>>> AddCharacterSkill(
+        AddCharacterSkillDTO newCharacterSkill)
+    {
+        return await _characterService.AddCharacterSkill(newCharacterSkill);
     }
 }
